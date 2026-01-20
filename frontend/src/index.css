@@ -1821,3 +1821,2365 @@ p{ margin:0; }
   .navGroup{ width: 100%; }
   .navTabs{ width: 100%; justify-content:flex-start; }
 }
+
+
+/* ===== Mobile safety (anti desborde) ===== */
+* { box-sizing: border-box; }
+html, body { width: 100%; overflow-x: hidden; }
+img, video { max-width: 100%; height: auto; }
+.container { width: 100%; }
+
+/* Evita que inputs / cards se salgan */
+input, select, textarea, button { max-width: 100%; }
+
+
+@media (max-width: 720px){
+  .topNavInner{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .brand{
+    justify-content: center;
+  }
+
+  .navTabs{
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navGroup{
+    width: 100%;
+  }
+
+  .navGroupTabs{
+    justify-content: center;
+  }
+}
+/* =========================================================
+   NAVBAR mobile compact (mejora estética + limpieza)
+   Pegar al final de index.css
+   ========================================================= */
+
+   :root{
+    --navMaxW: 1180px;
+  }
+  
+  /* Mejor anti blur “sucio” en mobile */
+  .topNav{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* --- MODO MOBILE --- */
+  @media (max-width: 720px){
+    .topNavInner{
+      max-width: var(--navMaxW);
+      padding: 10px 12px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+  
+    /* Brand más compacto */
+    .brand{
+      min-width: 0;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+  
+    .brandLogo{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+    }
+  
+    .brandName{
+      font-size: 12px;
+      letter-spacing: .12em;
+    }
+  
+    /* En móvil quita el subtítulo (se ve cargado) */
+    .brandSub{
+      display: none;
+    }
+  
+    /* user pill NO centrado y más fino */
+    .navCenter{
+      justify-content: flex-start;
+    }
+  
+    .userPill{
+      padding: 8px 10px;
+      gap: 8px;
+      max-width: 100%;
+      border-radius: 14px;
+    }
+  
+    .userName{
+      max-width: 100%;
+      font-size: 12px;
+      font-weight: 850;
+    }
+  
+    .userRole{
+      font-size: 11px;
+      padding: 5px 8px;
+    }
+  
+    /* Tabs: más pequeños y en una fila que pueda scrollear horizontal */
+    .navTabs{
+      width: 100%;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      gap: 10px;
+      scrollbar-width: none;
+    }
+    .navTabs::-webkit-scrollbar{ display:none; }
+  
+    .navGroup{
+      padding: 8px 8px 6px;
+      border-radius: 16px;
+      flex: 0 0 auto;
+    }
+  
+    .navGroupLabel{
+      font-size: 10px;
+      letter-spacing: .14em;
+      padding: 0 2px;
+    }
+  
+    .navGroupTabs{
+      gap: 8px;
+      flex-wrap: nowrap;
+    }
+  
+    /* Botones tabs más “chip” */
+    .navTab{
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .01em;
+      flex: 0 0 auto;
+      background: rgba(10,16,26,.25);
+    }
+  
+    .navTabActive{
+      box-shadow: 0 10px 28px rgba(37,99,235,.20);
+    }
+  
+    /* Salir más discreto */
+    .navTab-danger{
+      padding: 9px 12px;
+      border-radius: 12px;
+    }
+  }
+  
+  /* --- MODO EXTRA PEQUEÑO (iPhone SE) --- */
+  @media (max-width: 420px){
+    .topNavInner{ padding: 10px 10px; }
+    .brandLogo{ width: 32px; height: 32px; }
+    .userPill{ padding: 8px 9px; }
+    .navTab{ padding: 8px 11px; font-size: 12px; }
+  }
+  
+
+  body{
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+
+  /* =========================================================
+   Account menu (mobile top-right)
+   Pegar al final de index.css
+   ========================================================= */
+
+.navRightWrap{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap: 10px;
+}
+
+/* Botón cuenta */
+.accountWrap{
+  position: relative;
+  display:flex;
+  align-items:center;
+}
+
+.accountBtn{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(42,58,82,.85);
+  background: rgba(10,16,26,.30);
+  color: rgba(233,238,245,.90);
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.accountBtn:hover{
+  transform: translateY(-1px);
+  background: rgba(10,16,26,.50);
+  border-color: rgba(59,130,246,.28);
+}
+
+.accountBtnActive{
+  border-color: rgba(59,130,246,.50);
+  background: linear-gradient(180deg, rgba(59,130,246,.22), rgba(59,130,246,.08));
+  box-shadow: 0 18px 52px rgba(37,99,235,.20);
+}
+
+.accountAvatar{
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 950;
+  background: rgba(59,130,246,.12);
+  border: 1px solid rgba(59,130,246,.25);
+}
+
+.accountChevron{
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(233,238,245,.65);
+  border-bottom: 2px solid rgba(233,238,245,.65);
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+
+/* Dropdown */
+.accountMenu{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: 280px;
+  border-radius: 18px;
+  border: 1px solid rgba(42,58,82,.85);
+  background: rgba(8, 12, 18, .82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 28px 90px rgba(0,0,0,.55);
+  overflow: hidden;
+  z-index: 90;
+}
+
+.accountHeader{
+  padding: 14px 14px 12px;
+}
+
+.accountName{
+  font-weight: 950;
+  color: rgba(233,238,245,.96);
+  letter-spacing: .01em;
+}
+
+.accountMeta{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.accountStatusDot{
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(34,197,94,.95);
+  box-shadow: 0 0 0 6px rgba(34,197,94,.10);
+}
+
+.accountRole{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(59,130,246,.25);
+  background: rgba(59,130,246,.10);
+  color: rgba(233,238,245,.88);
+  text-transform: lowercase;
+  font-weight: 850;
+}
+
+.accountEmail{
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(233,238,245,.58);
+  word-break: break-word;
+}
+
+.accountDivider{
+  height: 1px;
+  background: rgba(42,58,82,.70);
+}
+
+/* Botón salir premium */
+.accountLogout{
+  width: 100%;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  color: rgba(233,238,245,.92);
+  font-weight: 900;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+
+.accountLogout:hover{
+  background: rgba(239,68,68,.10);
+  color: rgba(255,255,255,.98);
+}
+
+.logoutIcon{
+  width: 26px;
+  height: 26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 12px;
+  border: 1px solid rgba(239,68,68,.28);
+  background: rgba(239,68,68,.08);
+}
+
+/* --- Mobile rules: esconder user pill grande y mostrar account --- */
+@media (max-width: 720px){
+  .navCenter{ display: none; } /* ya no se pierde info: estará en el dropdown */
+  .accountBtn{ display:flex; }
+}
+
+/* --- Desktop: el account puede quedarse, pero si quieres ocultarlo en desktop --- */
+/* @media (min-width: 721px){
+  .accountBtn{ display:none; }
+} */
+
+
+
+/* ===== Account icon (premium, borderless) ===== */
+.accountWrap{
+  position: relative;
+  display:flex;
+  align-items:center;
+}
+
+/* botón icono sin borde */
+.accountIconBtn{
+  display:flex;
+  align-items:center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-2px); /* un poco más arriba */
+  transition: transform .12s ease, opacity .12s ease;
+}
+
+.accountIconBtn:hover{
+  transform: translateY(-3px);
+  opacity: .95;
+}
+
+/* estado activo: glow sutil */
+.accountIconBtnActive .accountAvatarLite{
+  box-shadow:
+    0 18px 55px rgba(37,99,235,.26),
+    0 0 0 6px rgba(59,130,246,.12);
+  border-color: rgba(59,130,246,.35);
+}
+
+/* “avatar” limpio */
+.accountAvatarLite{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 950;
+  letter-spacing: .01em;
+
+  /* glass */
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+
+  color: rgba(233,238,245,.92);
+}
+
+/* chevron minimal */
+.accountChevronLite{
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(233,238,245,.55);
+  border-bottom: 2px solid rgba(233,238,245,.55);
+  transform: rotate(45deg);
+  margin-top: 1px;
+  opacity: .7;
+}
+
+/* en móvil, que quede bien arriba a la derecha */
+@media (max-width: 720px){
+  .navRightWrap{
+    align-items: flex-start;
+  }
+  .accountWrap{
+    margin-top: -2px;
+  }
+}
+
+/* Dropdown: muévelo un poco más arriba y más pegado al icono */
+.accountMenu{
+  top: calc(100% + 8px);
+  right: 0;
+}
+
+
+/* ===== Ultra clean account icon (solo letra, sin borde) ===== */
+
+.accountWrap{
+  position: relative;
+  display:flex;
+  align-items:flex-start;
+}
+
+/* botón invisible, solo área clickeable */
+.accountDotBtn{
+  width: 40px;
+  height: 40px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+
+  /* más arriba */
+  transform: translateY(-10px);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition: transform .14s ease, filter .14s ease, opacity .14s ease;
+}
+
+.accountDotBtn:hover{
+  transform: translateY(-12px);
+  filter: brightness(1.06);
+}
+
+/* SOLO LETRA, estilo “icono” */
+.accountDotLetter{
+  font-weight: 950;
+  font-size: 15px;
+  letter-spacing: .02em;
+  line-height: 1;
+
+  /* se ve como “letra flotante” */
+  color: rgba(233,238,245,.92);
+
+  /* glow suave (sin borde) */
+  text-shadow:
+    0 10px 26px rgba(0,0,0,.55),
+    0 0 22px rgba(59,130,246,.18);
+}
+
+/* Estado activo (cuando el menú está abierto): glow más pro */
+.accountDotBtnActive .accountDotLetter{
+  color: rgba(255,255,255,.98);
+  text-shadow:
+    0 12px 32px rgba(0,0,0,.60),
+    0 0 26px rgba(59,130,246,.30),
+    0 0 10px rgba(59,130,246,.18);
+}
+
+/* Para que el dropdown aparezca pegadito arriba a la derecha */
+.accountMenu{
+  top: calc(100% + 6px);
+  right: -6px;
+}
+
+/* Mobile: alinear mejor con el navbar */
+@media (max-width: 720px){
+  .navRightWrap{
+    align-items:flex-start;
+  }
+}
+.accountDotLetter{
+  font-variant: all-small-caps;
+}
+
+
+
+
+/* =========================================================
+   Gourmet account crest (oro + corona) + alineación perfecta
+   Pegar al final de index.css
+   ========================================================= */
+
+/* Asegura 3 columnas en mobile: izquierda (logo), centro (operación), derecha (cuenta) */
+@media (max-width: 720px){
+  .topNavInner{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+      "brand center account"
+      "tabs  tabs   tabs";
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand{ grid-area: brand; justify-self: start; }
+  .navCenter{ grid-area: center; justify-self: center; }
+  .navRightWrap{ grid-area: account; justify-self: end; }
+
+  /* tabs en segunda fila */
+  .navTabs{ grid-area: tabs; }
+}
+
+/* Oculta la pill del centro en mobile (ya lo tenemos en dropdown) */
+@media (max-width: 720px){
+  .navCenter{ display:none; } /* si quieres mantenerlo, lo activamos luego */
+}
+
+/* Botón cuenta: mismo alto visual que el logo */
+.accountWrap{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Sello gourmet */
+.accountCrestBtn{
+  width: 40px;
+  height: 40px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform: translateY(0); /* misma altura que logo */
+  transition: transform .12s ease, filter .12s ease;
+}
+.accountCrestBtn:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+/* Ring dorado suave (sin borde duro) */
+.accountCrestRing{
+  position:absolute;
+  inset: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(120% 120% at 30% 20%,
+      rgba(255, 216, 122, .22) 0%,
+      rgba(255, 216, 122, .10) 35%,
+      rgba(0,0,0,0) 70%),
+    rgba(255,255,255,.035);
+  box-shadow:
+    0 14px 40px rgba(0,0,0,.45);
+  backdrop-filter: blur(10px);
+}
+
+/* Corona mini (súper sutil, gourmet) */
+.accountCrestCrown{
+  position:absolute;
+  top: -5px;
+  font-size: 12px;
+  line-height: 1;
+  color: rgba(255, 216, 122, .85);
+  text-shadow: 0 8px 22px rgba(0,0,0,.65);
+  opacity: .92;
+}
+
+/* Letra serif elegante (combina con IMPERIA) */
+.accountCrestLetter{
+  position: relative;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.92);
+  text-shadow:
+    0 10px 22px rgba(0,0,0,.55),
+    0 0 18px rgba(255, 216, 122, .18);
+}
+
+/* Estado activo: glow dorado más notorio (para que sepan que es menú) */
+.accountCrestBtnActive .accountCrestRing{
+  background:
+    radial-gradient(120% 120% at 30% 20%,
+      rgba(255, 216, 122, .30) 0%,
+      rgba(255, 216, 122, .14) 35%,
+      rgba(0,0,0,0) 70%),
+    rgba(255,255,255,.05);
+  box-shadow:
+    0 18px 60px rgba(255, 216, 122, .12),
+    0 14px 40px rgba(0,0,0,.55);
+}
+
+.accountCrestBtnActive .accountCrestLetter{
+  color: rgba(255,255,255,.98);
+  text-shadow:
+    0 12px 28px rgba(0,0,0,.60),
+    0 0 22px rgba(255, 216, 122, .28);
+}
+
+/* Dropdown pegado y elegante */
+.accountMenu{
+  top: calc(100% + 10px);
+  right: 0;
+}
+
+
+/* ===== FIX: alineación real, sin top manual ===== */
+
+/* Asegura que el lado derecho se alinee al centro del navbar */
+.navRightWrap{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Asegura que el botón NO sea absolute */
+.accountCrestBtn{
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  margin: 0;
+}
+
+/* DESKTOP/TABLET: alineado con el logo (ajuste fino) */
+@media (min-width: 721px){
+  .accountCrestBtn{
+    transform: translateY(0px);
+  }
+}
+
+/* MOBILE: a la misma altura del logo pero con micro ajuste */
+@media (max-width: 720px){
+  .accountCrestBtn{
+    transform: translateY(2px);
+  }
+}
+@media (max-width: 720px){
+  .topNavInner{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "brand nav account";
+    align-items: center;
+    padding: 12px 14px;
+    gap: 14px;
+  }
+
+  .brand{ grid-area: brand; }
+  .navTabs{ grid-area: nav; justify-content: center; }
+  .navRightWrap{ grid-area: account; }
+}
+
+
+/* =========================================================
+   TOP NAV minimal (clean)
+   ========================================================= */
+
+   .topNav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  
+  .topNavInner{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  
+  .brandLogo{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    object-fit: cover;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  }
+  
+  .brandText{ min-width: 0; }
+  .brandName{
+    font-weight: 950;
+    letter-spacing: .12em;
+    font-size: 14px;
+  }
+  .brandTag{
+    opacity: .75;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  
+  .navCenter{
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+  
+  .userChip{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 12px 30px rgba(0,0,0,.22);
+  }
+  
+  .userDot{
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0, 255, 150, .7);
+    box-shadow: 0 0 0 4px rgba(0,255,150,.12);
+  }
+  
+  .userChipName{ font-weight: 900; }
+  .userChipRole{
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    font-size: 12px;
+    opacity: .9;
+  }
+  
+  .navRightWrap{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  /* =========================================================
+     Burger (premium)
+     ========================================================= */
+  
+  .burgerBtn{
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 14px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    cursor: pointer;
+    transition: transform .12s ease, filter .12s ease, background .12s ease;
+  }
+  
+  .burgerBtn:hover{
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+  
+  .burgerLines{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .burgerLines i{
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: rgba(255,255,255,.85);
+    border-radius: 999px;
+    margin: 2px 0;
+    opacity: .9;
+  }
+  
+  /* =========================================================
+     Account crest (your crown letter)
+     ========================================================= */
+  
+  .accountCrestBtn{
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    display: grid;
+    place-items: center;
+    transition: transform .12s ease, filter .12s ease;
+  }
+  
+  .accountCrestBtn:hover{
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+  
+  .accountCrestLetter{
+    font-weight: 950;
+    letter-spacing: .06em;
+    opacity: .92;
+  }
+  
+  .accountCrestCrown{
+    position: absolute;
+    top: -8px;
+    font-size: 12px;
+    opacity: .9;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,.45));
+  }
+  
+  /* =========================================================
+     Drawer (left sidebar)
+     ========================================================= */
+  
+  .drawerOverlay{
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgba(0,0,0,.0);
+    pointer-events: none;
+    transition: background .18s ease;
+  }
+  
+  .drawerOverlayOpen{
+    background: rgba(0,0,0,.42);
+    pointer-events: auto;
+  }
+  
+  .drawer{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 320px;
+    max-width: 88vw;
+    transform: translateX(-105%);
+    transition: transform .20s ease;
+    background: rgba(10,16,24,.72);
+    backdrop-filter: blur(18px);
+    border-right: 1px solid rgba(255,255,255,.10);
+    box-shadow: 26px 0 80px rgba(0,0,0,.55);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .drawerOpen{
+    transform: translateX(0);
+  }
+  
+  .drawerHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  
+  .drawerTitle{
+    font-weight: 950;
+    letter-spacing: .10em;
+    opacity: .92;
+  }
+  
+  .drawerClose{
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.06);
+    cursor: pointer;
+  }
+  
+  .drawerBody{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: auto;
+  }
+  
+  .drawerGroup{
+    padding: 10px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  
+  .drawerGroupTitle{
+    font-size: 10px;
+    letter-spacing: .22em;
+    opacity: .70;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  
+  .drawerLink{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: rgba(255,255,255,.88);
+    border: 1px solid transparent;
+    transition: background .12s ease, transform .12s ease, border-color .12s ease;
+    font-weight: 800;
+  }
+  
+  .drawerLink:hover{
+    background: rgba(255,255,255,.06);
+    transform: translateY(-1px);
+    border-color: rgba(255,255,255,.10);
+  }
+  
+  .drawerLinkActive{
+    background: rgba(60,140,255,.14);
+    border-color: rgba(60,140,255,.25);
+  }
+  
+  .drawerFooter{
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: grid;
+    gap: 12px;
+  }
+  
+  .drawerProfile{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  
+  .drawerAvatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-weight: 950;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+  }
+  
+  .drawerProfileName{ font-weight: 950; }
+  .drawerProfileRole{ opacity: .7; font-size: 12px; margin-top: 2px; }
+  
+  .btnLogout{
+    width: 100%;
+    border-radius: 16px;
+    padding: 12px 14px;
+    font-weight: 950;
+    background: rgba(255,90,90,.14);
+    border: 1px solid rgba(255,90,90,.22);
+  }
+  
+  .btnLogout:hover{
+    filter: brightness(1.05);
+  }
+  
+  /* =========================================================
+     Mobile tweaks (top stays clean)
+     ========================================================= */
+  @media (max-width: 720px){
+    .topNavInner{
+      grid-template-columns: auto 1fr auto;
+      padding: 10px 12px;
+    }
+  
+    .brandLogo{ width: 36px; height: 36px; border-radius: 12px; }
+    .brandName{ font-size: 13px; }
+    .brandTag{ font-size: 11px; }
+  
+    /* si quieres, oculta el chip en móviles chicos */
+    /* .navCenter{ display:none; } */
+  }
+  
+
+  /* =========================
+   NAV NX (aislado)
+   ========================= */
+.nx-topNav{
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.nx-topNavInner{
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 16px;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.nx-brand{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.nx-brandLogo{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 10px 26px rgba(0,0,0,.35);
+}
+
+.nx-brandText{ min-width: 0; }
+.nx-brandName{
+  font-weight: 950;
+  letter-spacing: .12em;
+  font-size: 14px;
+  line-height: 1.1;
+}
+.nx-brandTag{
+  opacity: .75;
+  font-size: 12px;
+  margin-top: 2px;
+  line-height: 1.1;
+}
+
+.nx-center{
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.nx-userChip{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+  max-width: 100%;
+}
+
+.nx-userDot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0, 255, 150, .7);
+  box-shadow: 0 0 0 4px rgba(0,255,150,.12);
+  flex: 0 0 auto;
+}
+
+.nx-userName{
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+
+.nx-userRole{
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  font-size: 12px;
+  opacity: .9;
+  flex: 0 0 auto;
+}
+
+.nx-right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* burger */
+.nx-burgerBtn{
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  cursor: pointer;
+  transition: transform .12s ease, filter .12s ease;
+}
+.nx-burgerBtn:hover{
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.nx-burgerLines{
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+.nx-burgerLines i{
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: rgba(255,255,255,.85);
+  border-radius: 999px;
+  margin: 2px 0;
+  opacity: .92;
+}
+
+/* account letter */
+.nx-accountBtn{
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  position: relative;
+  transition: transform .12s ease, filter .12s ease;
+}
+.nx-accountBtn:hover{
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.nx-letter{
+  font-weight: 950;
+  letter-spacing: .06em;
+  opacity: .92;
+}
+.nx-crown{
+  position: absolute;
+  top: -8px;
+  font-size: 12px;
+  opacity: .9;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.45));
+}
+
+/* overlay + drawer */
+.nx-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background .18s ease;
+}
+.nx-overlayOpen{
+  background: rgba(0,0,0,.42);
+  pointer-events: auto;
+}
+
+.nx-drawer{
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 88vw;
+  transform: translateX(-105%);
+  transition: transform .20s ease;
+  background: rgba(10,16,24,.72);
+  backdrop-filter: blur(18px);
+  border-right: 1px solid rgba(255,255,255,.10);
+  box-shadow: 26px 0 80px rgba(0,0,0,.55);
+  display: flex;
+  flex-direction: column;
+}
+.nx-drawerOpen{ transform: translateX(0); }
+
+.nx-drawerHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.nx-drawerTitle{
+  font-weight: 950;
+  letter-spacing: .10em;
+  opacity: .92;
+}
+.nx-close{
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  cursor: pointer;
+}
+
+.nx-body{
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+}
+
+.nx-group{
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.nx-groupTitle{
+  font-size: 10px;
+  letter-spacing: .22em;
+  opacity: .70;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.nx-drawerLink{
+  display: flex;
+  align-items: center;
+  padding: 11px 12px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: rgba(255,255,255,.88);
+  border: 1px solid transparent;
+  transition: background .12s ease, transform .12s ease, border-color .12s ease;
+  font-weight: 800;
+}
+.nx-drawerLink:hover{
+  background: rgba(255,255,255,.06);
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.10);
+}
+.nx-drawerLinkActive{
+  background: rgba(60,140,255,.14);
+  border-color: rgba(60,140,255,.25);
+}
+
+.nx-footer{
+  margin-top: auto;
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: grid;
+  gap: 12px;
+}
+
+.nx-profile{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.nx-avatar{
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 950;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+}
+.nx-profileName{ font-weight: 950; }
+.nx-profileRole{ opacity: .7; font-size: 12px; margin-top: 2px; }
+
+.nx-logout{
+  width: 100%;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 950;
+  background: rgba(255,90,90,.14);
+  border: 1px solid rgba(255,90,90,.22);
+}
+
+/* mobile: reduce chip */
+@media (max-width: 720px){
+  .nx-topNavInner{ padding: 10px 12px; }
+  .nx-brandLogo{ width: 36px; height: 36px; border-radius: 12px; }
+  .nx-brandName{ font-size: 13px; }
+  .nx-brandTag{ font-size: 11px; }
+  .nx-userName{ max-width: 120px; }
+}
+/* =========================================================
+   IMPERIA NAV — TOPBAR + DRAWER (premium)
+   ========================================================= */
+
+   .impTopNav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(6,10,18,.72);
+    border-bottom: 1px solid rgba(120,160,255,.12);
+  }
+  
+  .impTopNavInner{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 14px;
+    align-items: center;
+  }
+  
+  /* Burger bien a la izquierda */
+  .impBurger{
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .impBurger:hover{ background: rgba(120,160,255,.08); }
+  .impBurger:active{ transform: translateY(1px); }
+  .impBurger span{
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: rgba(235,245,255,.85);
+    border-radius: 999px;
+    margin: 2px 0;
+    opacity: .9;
+  }
+  
+  /* Brand */
+  .impBrand{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 260px;
+  }
+  .impBrandLogo{
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+  .impBrandName{
+    font-weight: 900;
+    letter-spacing: .08em;
+    font-size: 14px;
+    opacity: .95;
+  }
+  .impBrandSub{
+    font-size: 12px;
+    opacity: .65;
+    margin-top: 1px;
+  }
+  
+  /* Centro: pill con nombre/rol */
+  .impCenterPill{
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(120,160,255,.14);
+    box-shadow: 0 18px 50px rgba(0,0,0,.25);
+    min-width: 260px;
+    justify-content: center;
+  }
+  .impOnlineDot{
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #29d37d;
+    box-shadow: 0 0 0 4px rgba(41,211,125,.15);
+  }
+  .impCenterName{
+    font-weight: 800;
+    opacity: .92;
+    white-space: nowrap;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .impCenterRole{
+    font-size: 12px;
+    opacity: .75;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  
+  /* Right */
+  .impRight{
+    justify-self: end;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Usuario: círculo mostaza + coronita (sin borde) */
+  .impUserCrest{
+    width: 44px;
+    height: 44px;
+    border: 0 !important;
+    outline: none;
+    cursor: pointer;
+    background: radial-gradient(120% 120% at 30% 20%, rgba(255,205,120,.35), rgba(20,26,36,.85));
+    border-radius: 999px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.45);
+    position: relative;
+    display: grid;
+    place-items: center;
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .impUserCrest:hover{ filter: brightness(1.06); }
+  .impUserCrest:active{ transform: translateY(1px); }
+  .impUserLetter{
+    font-weight: 900;
+    color: rgba(255,255,255,.92);
+    font-size: 15px;
+    letter-spacing: .02em;
+  }
+  .impCrown{
+    position: absolute;
+    top: -7px;
+    font-size: 11px;
+    color: rgba(255,205,120,.95);
+    text-shadow: 0 10px 25px rgba(255,205,120,.25);
+  }
+  
+  /* Popover usuario (Salir aquí, no en drawer) */
+  .impUserPopover{
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    width: 220px;
+    border-radius: 16px;
+    background: rgba(10,14,22,.92);
+    border: 1px solid rgba(120,160,255,.14);
+    box-shadow: 0 30px 90px rgba(0,0,0,.55);
+    padding: 10px;
+    backdrop-filter: blur(10px);
+  }
+  .impUserPopHead{
+    padding: 10px 10px 8px;
+  }
+  .impUserPopName{
+    font-weight: 900;
+    opacity: .95;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .impUserPopRole{
+    margin-top: 4px;
+    font-size: 12px;
+    opacity: .7;
+  }
+  .impUserPopLogout{
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,120,120,.18);
+    background: rgba(160,40,40,.18);
+    color: rgba(255,235,235,.92);
+    font-weight: 900;
+    cursor: pointer;
+    transition: filter .15s ease, transform .15s ease, background .15s ease;
+  }
+  .impUserPopLogout:hover{ filter: brightness(1.07); background: rgba(180,45,45,.20); }
+  .impUserPopLogout:active{ transform: translateY(1px); }
+  
+  /* =========================================================
+     DRAWER (solo navegación)
+     ========================================================= */
+  
+  .impDrawerOverlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease;
+    z-index: 60;
+  }
+  .impDrawerOverlay.isOpen{
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .impDrawer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: min(360px, 92vw);
+    transform: translateX(-110%);
+    transition: transform .22s ease;
+    z-index: 70;
+    padding: 16px 14px;
+    background: rgba(9,13,20,.92);
+    border-right: 1px solid rgba(120,160,255,.14);
+    backdrop-filter: blur(12px);
+    box-shadow: 40px 0 120px rgba(0,0,0,.55);
+  }
+  .impDrawer.isOpen{
+    transform: translateX(0);
+  }
+  
+  .impDrawerTop{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 6px 12px;
+  }
+  .impDrawerTitle{
+    font-weight: 950;
+    font-size: 22px;
+    letter-spacing: .01em;
+  }
+  .impDrawerClose{
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.85);
+    cursor: pointer;
+  }
+  .impDrawerClose:hover{ background: rgba(120,160,255,.10); }
+  
+  .impDrawerSection{
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(120,160,255,.10);
+  }
+  .impDrawerLabel{
+    font-size: 12px;
+    letter-spacing: .18em;
+    opacity: .6;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .impDrawerList{
+    display: grid;
+    gap: 8px;
+  }
+  
+  /* Items del drawer */
+  .impDrawerItem{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 12px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: rgba(240,248,255,.86);
+    background: rgba(255,255,255,.02);
+    border: 1px solid rgba(255,255,255,.06);
+    transition: background .15s ease, transform .15s ease, border-color .15s ease;
+  }
+  .impDrawerItem:hover{
+    background: rgba(120,160,255,.08);
+    border-color: rgba(120,160,255,.18);
+  }
+  .impDrawerItem:active{ transform: translateY(1px); }
+  
+  .impDrawerItemActive{
+    background: rgba(70,120,255,.18);
+    border-color: rgba(120,160,255,.28);
+  }
+  
+  /* =========================================================
+     Responsive: mobile limpia
+     - Mantiene burger izquierda
+     - Mantiene usuario derecha
+     - Centro pill se puede ocultar si falta espacio
+     ========================================================= */
+  
+  @media (max-width: 820px){
+    .impBrand{ min-width: 180px; }
+    .impCenterPill{ min-width: 0; }
+  }
+  
+  @media (max-width: 640px){
+    .impTopNavInner{
+      grid-template-columns: auto 1fr auto;
+    }
+    .impBrand{
+      min-width: 0;
+    }
+    .impCenterPill{
+      display: none; /* en móvil gana limpieza */
+    }
+  }
+  
+
+  @media (max-width: 640px){
+    .impTopNavInner{
+      max-width: 100%;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    /* burger siempre alineado */
+    .impBurger{
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      flex: 0 0 auto;
+    }
+    .impBurger span{ width: 16px; }
+  
+    /* marca compacta (NO baja de línea) */
+    .impBrand{
+      min-width: 0;
+      flex: 1 1 auto;
+      gap: 10px;
+    }
+    .impBrandLogo{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+    }
+    .impBrandName{
+      font-size: 13px;
+      letter-spacing: .06em;
+      line-height: 1;
+    }
+    .impBrandSub{
+      font-size: 11px;
+      margin-top: 2px;
+      opacity: .68;
+      line-height: 1.1;
+    }
+  
+    /* oculta el pill del centro en móvil */
+    .impCenterPill{ display: none !important; }
+  
+    /* user crest no se cae */
+    .impRight{
+      flex: 0 0 auto;
+    }
+    .impUserCrest{
+      width: 40px;
+      height: 40px;
+    }
+    .impCrown{ top: -6px; font-size: 10px; }
+  }
+  
+
+  /* =========================
+   RUN DETAIL — HEADER PRO
+   ========================= */
+
+.runHeroPro{
+  display: grid;
+  grid-template-columns: 1.25fr 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 18px;
+}
+
+.runTitle{
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-weight: 950;
+  letter-spacing: .01em;
+}
+
+.runTitleKicker{
+  opacity: .85;
+  font-weight: 900;
+}
+
+.runTitleSep{
+  opacity: .55;
+}
+
+.runTitleSection{
+  font-weight: 1000;
+}
+
+.runHeroChips{
+  margin-top: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badgeSmall.badgeOk{ border-color: rgba(28, 210, 140, .35); background: rgba(28, 210, 140, .08); }
+.badgeSmall.badgeInfo{ border-color: rgba(80, 150, 255, .35); background: rgba(80, 150, 255, .08); }
+.badgeSmall.badgeWarn{ border-color: rgba(255, 170, 60, .35); background: rgba(255, 170, 60, .08); }
+.badgeSmall.badgeMuted{ border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.04); }
+
+.progressWrapPro{
+  width: 100%;
+  padding: 12px 12px 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(20,28,44,.55), rgba(10,14,22,.25));
+}
+
+.progressTopLine{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progressLabel{
+  font-size: 12px;
+  opacity: .85;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.progressBarPro{
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.progressBarPro > div{
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(60,130,255,1), rgba(95,180,255,1));
+  box-shadow: 0 8px 22px rgba(60,130,255,.22);
+}
+
+.progressHint{
+  margin-top: 8px;
+  font-size: 12px;
+  opacity: .78;
+}
+
+.runSubmitBtn{
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-weight: 900;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+
+/* =========================
+   MOBILE: que no se aplaste
+   ========================= */
+@media (max-width: 640px){
+  .runHeroPro{
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .runTitle{
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  .progressWrapPro{
+    padding: 12px;
+  }
+
+  /* Botón full width en móvil */
+  .runSubmitBtn{
+    width: 100%;
+    justify-content: center;
+    padding: 13px 14px;
+    border-radius: 16px;
+  }
+
+  /* Que los chips no se vean gigantes ni raros */
+  .runHeroChips .badgeSmall{
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+}
+
+/* =========================
+   LISTA: pequeños ajustes mobile
+   ========================= */
+@media (max-width: 640px){
+  .runCardHead{
+    gap: 10px;
+  }
+
+  .runCardRight{
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .runDesc{
+    opacity: .78;
+    line-height: 1.25;
+  }
+
+  .runActions{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .runActions .btn{
+    width: 100%;
+    justify-content: center;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-weight: 850;
+  }
+
+  /* La zona de foto en móvil: que respire */
+  .drop{
+    border-radius: 16px;
+  }
+}
+
+
+/* =========================
+   ITEM ROW: responsive FIX
+   ========================= */
+
+   .itemRow{
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: linear-gradient(180deg, rgba(20,28,44,.55), rgba(10,14,22,.25));
+    overflow: hidden; /* evita “rebalse visual” */
+  }
+  
+  .itemMain{
+    min-width: 0; /* clave para que el texto pueda cortar/ajustar */
+  }
+  
+  .itemTitle{
+    font-weight: 900;
+    letter-spacing: .01em;
+  }
+  
+  .itemDesc{
+    opacity: .78;
+    margin-top: 4px;
+    line-height: 1.25;
+    word-break: break-word;
+  }
+  
+  /* Handle */
+  .dragHandle{
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    cursor: grab;
+    user-select: none;
+  }
+  
+  .itemRow.dragging .dragHandle{ cursor: grabbing; }
+  
+  /* Controles */
+  .itemFlags{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap; /* desktop */
+    justify-content: flex-end;
+  }
+  
+  /* Botones pequeños que no rompan */
+  .activePill{
+    white-space: nowrap;
+  }
+  
+  /* =========================
+     MOBILE: 2 filas + WRAP
+     ========================= */
+  @media (max-width: 640px){
+    .itemRow{
+      grid-template-columns: 40px 1fr;
+      grid-template-areas:
+        "handle main"
+        "flags  flags";
+      gap: 10px;
+      padding: 12px;
+    }
+  
+    .dragHandle{ grid-area: handle; width: 34px; height: 34px; border-radius: 12px; }
+    .itemMain{ grid-area: main; }
+    .itemFlags{
+      grid-area: flags;
+      justify-content: flex-start;
+      flex-wrap: wrap;       /* ✅ aquí se arregla todo */
+      gap: 8px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+  
+    /* Que los switches no sean gigantes */
+    .itemFlags .switchWrap,
+    .itemFlags .switch{
+      transform: scale(.95);
+      transform-origin: left center;
+    }
+  
+    /* Active pill más compacto */
+    .activePill{
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+  
+    /* Delete icon sin romper fila */
+    .iconBtn{
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+    }
+  }
+  
+
+  .flagChip{
+    display:flex;
+    align-items:center;
+    padding: 6px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+  }
+  
+
+  /* ===== TOP NAV LAYOUT ===== */
+.impTopNav{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  background: linear-gradient(180deg, rgba(10,12,18,.92), rgba(10,12,18,.78));
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.impTopNavInner{
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Left cluster */
+.impLeft{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* Burger */
+.impBurger{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03);
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+.impBurger span{
+  width: 18px;
+  height: 2px;
+  border-radius: 99px;
+  background: rgba(255,255,255,.78);
+  display:block;
+  opacity: .9;
+}
+.impBurger:hover{ filter: brightness(1.08); }
+
+/* Brand */
+.impBrand{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  min-width: 0;
+}
+.impBrandLogo{
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 14px 28px rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.impBrandText{ min-width: 0; }
+.impBrandName{
+  font-weight: 900;
+  letter-spacing: .08em;
+  font-size: 14px;
+  line-height: 1.05;
+}
+.impBrandSub{
+  font-size: 12px;
+  opacity: .72;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Center pill */
+.impCenter{
+  display:flex;
+  justify-content:center;
+}
+.impCenterPill{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: radial-gradient(120% 120% at 20% 0%,
+    rgba(60,110,200,.18) 0%,
+    rgba(255,255,255,.02) 55%,
+    rgba(0,0,0,.0) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  max-width: 460px;
+}
+.impOnlineDot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(44, 220, 150, .95);
+  box-shadow: 0 0 0 4px rgba(44, 220, 150, .12);
+}
+.impCenterName{
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+.impCenterRole{
+  font-size: 12px;
+  opacity: .72;
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.03);
+}
+
+/* Right */
+.impRight{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap: 10px;
+}
+
+/* User crest (mostaza + corona) */
+.impUserCrest{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  display:grid;
+  place-items: center;
+  color: rgba(255,255,255,.92);
+
+  background: radial-gradient(120% 120% at 30% 20%,
+    rgba(255, 214, 140, .35) 0%,
+    rgba(160, 110, 35, .55) 55%,
+    rgba(90, 55, 18, .75) 100%);
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.5),
+    inset 0 1px 0 rgba(255,255,255,.10);
+}
+.impUserCrest:hover{ filter: brightness(1.06); }
+.impUserCrest.isOpen{ outline: 2px solid rgba(255,214,140,.25); outline-offset: 2px; }
+
+.impCrown{
+  position:absolute;
+  top: -6px;
+  font-size: 12px;
+  opacity: .95;
+  text-shadow: 0 10px 18px rgba(0,0,0,.45);
+}
+.impUserLetter{
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+
+/* User popover */
+.impUserPopover{
+  position: absolute;
+  top: 66px;
+  right: 16px;
+  width: 260px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: radial-gradient(120% 120% at 20% 0%,
+    rgba(50,90,170,.22) 0%,
+    rgba(15,18,26,.92) 55%,
+    rgba(10,12,18,.96) 100%);
+  box-shadow:
+    0 22px 60px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  padding: 14px;
+  z-index: 80;
+}
+.impUserPopHead{
+  padding: 6px 8px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  margin-bottom: 12px;
+}
+.impUserPopName{ font-weight: 900; }
+.impUserPopRole{ opacity: .7; font-size: 12px; margin-top: 4px; }
+
+/* ===== Logout button (premium) ===== */
+.logoutBtn{
+  width: 100%;
+  height: 46px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 215, 120, .18);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+
+  color: rgba(255,255,255,.92);
+  background: linear-gradient(180deg,
+    rgba(140, 30, 45, .35) 0%,
+    rgba(80, 18, 28, .42) 45%,
+    rgba(55, 14, 20, .52) 100%);
+  box-shadow:
+    0 14px 30px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  transition: transform .14s ease, filter .14s ease, border-color .14s ease;
+}
+.logoutBtn::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background: radial-gradient(80% 120% at 20% 0%,
+    rgba(255, 210, 140, .22) 0%,
+    rgba(255,255,255,0) 55%);
+  opacity: .8;
+  pointer-events:none;
+}
+.logoutBtn:hover{
+  filter: brightness(1.08);
+  border-color: rgba(255, 215, 120, .28);
+}
+.logoutBtn:active{
+  transform: translateY(1px) scale(.99);
+}
+.logoutIcon{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+
+  color: rgba(255, 232, 180, .95);
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+.logoutText{
+  font-weight: 900;
+  letter-spacing: .02em;
+  font-size: 14px;
+}
+.logoutGlow{
+  position:absolute;
+  right:-40px;
+  top:-40px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle,
+    rgba(255, 210, 120, .20) 0%,
+    rgba(255, 210, 120, .00) 65%);
+  transform: rotate(12deg);
+  pointer-events:none;
+}
+
+/* ===== Drawer Overlay + Drawer (si no lo tienes pro) ===== */
+.impDrawerOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+  z-index: 60;
+}
+.impDrawerOverlay.isOpen{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.impDrawer{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 320px;
+  max-width: 92vw;
+  transform: translateX(-102%);
+  transition: transform .22s ease;
+  z-index: 70;
+
+  background: radial-gradient(120% 120% at 20% 0%,
+    rgba(50,90,170,.18) 0%,
+    rgba(15,18,26,.94) 55%,
+    rgba(10,12,18,.98) 100%);
+  border-right: 1px solid rgba(255,255,255,.08);
+  box-shadow: 18px 0 60px rgba(0,0,0,.55);
+  padding: 18px;
+}
+.impDrawer.isOpen{ transform: translateX(0); }
+
+.impDrawerTop{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.impDrawerTitle{
+  font-weight: 900;
+  font-size: 16px;
+}
+.impDrawerClose{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03);
+  cursor: pointer;
+}
+
+.impDrawerSection{
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.02);
+}
+.impDrawerLabel{
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .6;
+  margin-bottom: 10px;
+}
+.impDrawerList{
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.impDrawerItem{
+  display:flex;
+  align-items:center;
+  height: 44px;
+  border-radius: 14px;
+  padding: 0 12px;
+  color: rgba(255,255,255,.88);
+  text-decoration:none;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.impDrawerItem:hover{ filter: brightness(1.08); }
+.impDrawerItemActive{
+  background: rgba(60,120,220,.20);
+  border-color: rgba(80,140,240,.26);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 820px){
+  .impTopNavInner{
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "left right"
+      "center center";
+    row-gap: 10px;
+  }
+  .impLeft{ grid-area: left; }
+  .impRight{ grid-area: right; }
+  .impCenter{ grid-area: center; justify-content: flex-start; }
+  .impCenterPill{ width: 100%; max-width: none; }
+}
+
+@media (max-width: 520px){
+  .impBrandSub{ display:none; }
+  .impCenterRole{ display:none; }
+  .impCenterName{ max-width: 240px; }
+}

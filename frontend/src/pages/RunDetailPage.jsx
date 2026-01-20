@@ -7,6 +7,20 @@ function humanResult(v) {
   return v === "pass" ? "Cumple" : v === "fail" ? "No cumple" : v === "na" ? "N/A" : "—";
 }
 
+function humanStatus(s) {
+  if (s === "reviewed") return "Revisado";
+  if (s === "submitted") return "Enviado";
+  if (s === "in_progress") return "En progreso";
+  return s || "—";
+}
+
+function statusTone(s) {
+  if (s === "reviewed") return "badgeOk";
+  if (s === "submitted") return "badgeInfo";
+  if (s === "in_progress") return "badgeWarn";
+  return "badgeMuted";
+}
+
 export default function RunDetailPage() {
   const { id } = useParams();
   const { token, user } = useAuth();
@@ -90,13 +104,19 @@ export default function RunDetailPage() {
         return;
       }
 
+      // Validación PRO: si requiere nota al fallar
+      const resultToSave = f.result || existing?.result || "pass";
+      const noteToSave = (f.note ?? existing?.note ?? "").trim();
+      if (item.requires_note_on_fail && resultToSave === "fail" && !noteToSave) {
+        setErr(`"${item.title}" requiere nota cuando es "No cumple".`);
+        return;
+      }
+
       const fd = new FormData();
       fd.append("item_id", String(item.id));
-      fd.append("result", f.result || existing?.result || "pass");
+      fd.append("result", resultToSave);
 
-      const noteVal = f.note ?? existing?.note ?? "";
-      if (noteVal) fd.append("note", noteVal);
-
+      if (noteToSave) fd.append("note", noteToSave);
       if (f.file) fd.append("photo", f.file);
 
       await api.runs.upsertEntry(runId, fd, token);
@@ -105,7 +125,6 @@ export default function RunDetailPage() {
       setForm((prev) => {
         const copy = { ...prev };
         const curr = copy[item.id] || {};
-        // revoca preview si existe
         if (curr.previewUrl) URL.revokeObjectURL(curr.previewUrl);
         copy[item.id] = { ...curr, file: null, previewUrl: "" };
         return copy;
@@ -151,33 +170,62 @@ export default function RunDetailPage() {
   const done = items.filter((it) => !!entryByItem.get(it.id)).length;
   const pct = total ? Math.round((done / total) * 100) : 0;
 
+  // Para UI: que “Enviar verificación” se vea serio
+  const canSubmit = editable && total > 0 && done === total;
+
   return (
     <div className="container">
       {/* HERO / HEADER PRO */}
       <div className="runTop">
-        <div className="runHero">
+        <div className="runHero runHeroPro">
           <div className="runHeroLeft">
-            <div className="runTitle">Registro — {run.section_name}</div>
-            <div className="runMetaRow">
-              <span className="badgeSmall">Estado: {run.status}</span>
-              <span className="badgeSmall">{done}/{total} ítems</span>
+            <div className="runTitle">
+              <span className="runTitleKicker">Registro</span>
+              <span className="runTitleSep">—</span>
+              <span className="runTitleSection">{run.section_name}</span>
+            </div>
+
+            <div className="runMetaRow runHeroChips">
+              <span className={`badgeSmall ${statusTone(run.status)}`}>
+                Estado: {humanStatus(run.status)}
+              </span>
+
+              <span className="badgeSmall badgeMuted">
+                {done}/{total} ítems
+              </span>
+
               {!editable && <span className="badgeSmall badgePending">Solo lectura</span>}
             </div>
           </div>
 
-          <div className="progressWrap">
-            <div className="progressBar">
+          <div className="progressWrap progressWrapPro" aria-label="Progreso del registro">
+            <div className="progressTopLine">
+              <div className="progressLabel">Progreso</div>
+              <div className="progressText">{pct}%</div>
+            </div>
+
+            <div className="progressBar progressBarPro" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
               <div style={{ width: `${pct}%` }} />
             </div>
-            <div className="progressText">{pct}% completado</div>
+
+            <div className="progressHint">{done === total ? "Listo para enviar" : "Completa los ítems para enviar"}</div>
           </div>
 
-          <button className="btn btnPrimary" onClick={submit} disabled={!editable || submitting}>
+          <button
+            className="btn btnPrimary runSubmitBtn"
+            onClick={submit}
+            disabled={!canSubmit || submitting}
+            title={!canSubmit ? "Completa todos los ítems para enviar" : "Enviar verificación"}
+          >
             {submitting ? "Enviando..." : "Enviar verificación"}
           </button>
         </div>
 
-        {err && <div className="alert alertDanger" style={{ marginTop: 12 }}>{err}</div>}
+        {err && (
+          <div className="alert alertDanger" style={{ marginTop: 12 }}>
+            {err}
+          </div>
+        )}
       </div>
 
       {/* LISTA PRO */}
@@ -246,6 +294,7 @@ export default function RunDetailPage() {
                         N/A
                       </button>
                     </div>
+
                     {item.requires_note_on_fail && resultVal === "fail" && (
                       <div className="small" style={{ marginTop: 8 }}>
                         *Este ítem requiere nota si falla.
@@ -277,9 +326,7 @@ export default function RunDetailPage() {
                         </div>
 
                         <div className="row" style={{ gap: 8, flexWrap: "nowrap" }}>
-                          {previewUrl && (
-                            <img className="dropPreview" src={previewUrl} alt="preview" />
-                          )}
+                          {previewUrl && <img className="dropPreview" src={previewUrl} alt="preview" />}
 
                           {!previewUrl && photoUrl && (
                             <a className="btn btnGhost" href={photoUrl} target="_blank" rel="noreferrer">
@@ -299,9 +346,7 @@ export default function RunDetailPage() {
                                 const file = e.target.files?.[0] || null;
                                 if (!file) return;
 
-                                // crea preview pro
                                 const url = URL.createObjectURL(file);
-                                // si ya había preview anterior, revócalo
                                 setForm((prev) => {
                                   const curr = prev[item.id] || {};
                                   if (curr.previewUrl) URL.revokeObjectURL(curr.previewUrl);

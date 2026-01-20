@@ -123,7 +123,7 @@ export default function AdminRunsPage() {
 
           <div className="runsTopMeta">
             <span className="pill pillSoft">Historial global</span>
-            <span className="muted">Ordenados por día</span>
+            
             <span className="dot" />
             <span className="pill pillCount">{runs.length} total</span>
           </div>

@@ -33,18 +33,23 @@ export default function ItemRow({ id, item, onPatchItem, onDelete }) {
 
       {/* Flags */}
       <div className="itemFlags">
+      <div className="flagChip">
         <Switch
           checked={!!item.requires_photo}
           onChange={(v) => onPatchItem(item.id, { requires_photo: v })}
           label="Foto"
           stopPropagation
         />
+        </div>
+        <div className="flagChip">
+
         <Switch
           checked={!!item.requires_note_on_fail}
           onChange={(v) => onPatchItem(item.id, { requires_note_on_fail: v })}
           label="Nota"
           stopPropagation
         />
+        </div>
 
         {/* ✅ Botón Active tipo “pill” */}
         <button
