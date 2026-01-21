@@ -1,5 +1,6 @@
 import { pool } from "../db.js";
 import { requireFields } from "../utils/validators.js";
+import { uploadToSupabase } from "../utils/storage.js";
 
 export async function createRun(req, res) {
   const missing = requireFields(req.body, ["section_id"]);
@@ -123,7 +124,7 @@ export async function upsertEntry(req, res) {
   const resultVal = String(req.body.result);
   const note = req.body.note ? String(req.body.note) : null;
 
-  if (!["pass","fail","na"].includes(resultVal)) {
+  if (!["pass", "fail", "na"].includes(resultVal)) {
     return res.status(400).json({ message: "result must be pass|fail|na" });
   }
   if (!Number.isFinite(item_id)) return res.status(400).json({ message: "Invalid item_id" });
@@ -133,7 +134,7 @@ export async function upsertEntry(req, res) {
   const run = runRes.rows[0];
   if (!run) return res.status(404).json({ message: "Run not found" });
 
-  if (run.employee_id !== req.user.id && !["admin","supervisor"].includes(req.user.role)) {
+  if (run.employee_id !== req.user.id && !["admin", "supervisor"].includes(req.user.role)) {
     return res.status(403).json({ message: "Forbidden" });
   }
   if (run.status !== "in_progress") {
@@ -148,8 +149,28 @@ export async function upsertEntry(req, res) {
   const item = itemRes.rows[0];
   if (!item) return res.status(400).json({ message: "Item not found" });
 
-  const photo_url = req.file ? `/uploads/checks/${req.file.filename}` : (req.body.photo_url || null);
+  // --- FOTO: subir a Supabase si llega archivo ---
+  let photo_url = null;
 
+  const f = req.file; // multer memory
+  if (f) {
+    const safeName = (f.originalname || "photo.jpg").replace(/[^a-zA-Z0-9._-]/g, "_");
+    const filePath = `runs/run_${runId}/item_${item_id}/${Date.now()}_${safeName}`;
+
+    const publicUrl = await uploadToSupabase({
+      buffer: f.buffer,
+      contentType: f.mimetype,
+      path: filePath,
+    });
+
+    photo_url = publicUrl;
+  } else {
+    // si no viene archivo, puedes mantener la foto anterior (por ON CONFLICT)
+    // o aceptar una URL que venga del body (si lo usas en algún flujo)
+    photo_url = req.body.photo_url ? String(req.body.photo_url) : null;
+  }
+
+  // Validaciones según reglas
   if (item.requires_photo && !photo_url) {
     return res.status(400).json({ message: "Este ítem requiere foto" });
   }
@@ -161,13 +182,18 @@ export async function upsertEntry(req, res) {
     `INSERT INTO check_entries(run_id, item_id, result, note, photo_url)
      VALUES ($1,$2,$3,$4,$5)
      ON CONFLICT (run_id, item_id)
-     DO UPDATE SET result=EXCLUDED.result, note=EXCLUDED.note, photo_url=COALESCE(EXCLUDED.photo_url, check_entries.photo_url), created_at=NOW()
+     DO UPDATE SET
+       result=EXCLUDED.result,
+       note=EXCLUDED.note,
+       photo_url=COALESCE(EXCLUDED.photo_url, check_entries.photo_url),
+       created_at=NOW()
      RETURNING *`,
     [runId, item_id, resultVal, note, photo_url]
   );
 
   return res.status(201).json({ entry: upsert.rows[0] });
 }
+
 
 export async function submitRun(req, res) {
   const runId = Number(req.params.id);

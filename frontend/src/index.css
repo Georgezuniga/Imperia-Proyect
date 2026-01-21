@@ -4183,3 +4183,53 @@ input, select, textarea, button { max-width: 100%; }
   .impCenterRole{ display:none; }
   .impCenterName{ max-width: 240px; }
 }
+.imperiaModalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 9999;
+}
+
+.imperiaModal {
+  width: min(920px, 96vw);
+  max-height: 86vh;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(10, 14, 22, .72);
+  box-shadow: 0 24px 80px rgba(0,0,0,.55);
+}
+
+.imperiaModalTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.imperiaModalTitle {
+  font-weight: 650;
+  letter-spacing: .2px;
+  opacity: .95;
+}
+
+.imperiaModalBody {
+  padding: 14px;
+}
+
+.imperiaModalImg {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.25);
+}

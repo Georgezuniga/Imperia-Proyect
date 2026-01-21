@@ -21,6 +21,14 @@ function statusTone(s) {
   return "badgeMuted";
 }
 
+function resolvePhotoUrl(raw) {
+  if (!raw) return "";
+  // Si ya es URL absoluta (Supabase), úsala tal cual
+  if (/^https?:\/\//i.test(raw)) return raw;
+  // Si es ruta local tipo /uploads/..., usa backendBase
+  return `${backendBase}${raw}`;
+}
+
 export default function RunDetailPage() {
   const { id } = useParams();
   const { token, user } = useAuth();
@@ -39,6 +47,10 @@ export default function RunDetailPage() {
   // UI
   const [openId, setOpenId] = useState(null);
   const [savingItemId, setSavingItemId] = useState(null);
+
+  // ✅ Modal preview (premium)
+  const [viewer, setViewer] = useState({ open: false, url: "", title: "" });
+  const [imgStatus, setImgStatus] = useState("idle"); // idle | loading | ok | err
 
   async function load() {
     setErr("");
@@ -60,6 +72,15 @@ export default function RunDetailPage() {
     load().catch((e) => setErr(e.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runId, token]);
+
+  // cerrar modal con ESC
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === "Escape") setViewer({ open: false, url: "", title: "" });
+    }
+    if (viewer.open) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [viewer.open]);
 
   const entryByItem = useMemo(() => {
     const map = new Map();
@@ -155,6 +176,12 @@ export default function RunDetailPage() {
     }
   }
 
+  function openViewer(url, title = "Evidencia") {
+    if (!url) return;
+    setImgStatus("loading");
+    setViewer({ open: true, url, title });
+  }
+
   if (!run) {
     return (
       <div className="container">
@@ -175,6 +202,48 @@ export default function RunDetailPage() {
 
   return (
     <div className="container">
+      {/* ✅ MODAL PREMIUM (viewer) */}
+      {viewer.open && (
+        <div
+          className="imperiaModalBackdrop"
+          onClick={() => setViewer({ open: false, url: "", title: "" })}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="imperiaModal" onClick={(e) => e.stopPropagation()}>
+            <div className="imperiaModalTop">
+              <div className="imperiaModalTitle">{viewer.title}</div>
+
+              <div className="row" style={{ gap: 8 }}>
+                <a className="btn btnGhost" href={viewer.url} target="_blank" rel="noreferrer">
+                  Abrir aparte
+                </a>
+                <button className="btn btnPrimary" type="button" onClick={() => setViewer({ open: false, url: "", title: "" })}>
+                  Cerrar
+                </button>
+              </div>
+            </div>
+
+            <div className="imperiaModalBody">
+              {imgStatus === "loading" && <div className="small">Cargando evidencia...</div>}
+              {imgStatus === "err" && (
+                <div className="alert alertDanger">
+                  No se pudo cargar la imagen. (Revisa que el bucket sea public o la URL sea válida)
+                </div>
+              )}
+
+              <img
+                src={viewer.url}
+                alt="Evidencia"
+                className="imperiaModalImg"
+                onLoad={() => setImgStatus("ok")}
+                onError={() => setImgStatus("err")}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* HERO / HEADER PRO */}
       <div className="runTop">
         <div className="runHero runHeroPro">
@@ -186,9 +255,7 @@ export default function RunDetailPage() {
             </div>
 
             <div className="runMetaRow runHeroChips">
-              <span className={`badgeSmall ${statusTone(run.status)}`}>
-                Estado: {humanStatus(run.status)}
-              </span>
+              <span className={`badgeSmall ${statusTone(run.status)}`}>Estado: {humanStatus(run.status)}</span>
 
               <span className="badgeSmall badgeMuted">
                 {done}/{total} ítems
@@ -237,7 +304,8 @@ export default function RunDetailPage() {
           const resultVal = f.result || existing?.result || "pass";
           const noteVal = f.note ?? existing?.note ?? "";
 
-          const photoUrl = existing?.photo_url ? `${backendBase}${existing.photo_url}` : "";
+          // ✅ URL correcta (Supabase o backend local)
+          const photoUrl = resolvePhotoUrl(existing?.photo_url);
           const previewUrl = f.previewUrl || "";
 
           const isOpen = openId === item.id;
@@ -326,12 +394,24 @@ export default function RunDetailPage() {
                         </div>
 
                         <div className="row" style={{ gap: 8, flexWrap: "nowrap" }}>
-                          {previewUrl && <img className="dropPreview" src={previewUrl} alt="preview" />}
+                          {previewUrl && (
+                            <button
+                              type="button"
+                              className="btn btnGhost"
+                              onClick={() => openViewer(previewUrl, "Vista previa")}
+                            >
+                              Ver preview
+                            </button>
+                          )}
 
                           {!previewUrl && photoUrl && (
-                            <a className="btn btnGhost" href={photoUrl} target="_blank" rel="noreferrer">
+                            <button
+                              type="button"
+                              className="btn btnGhost"
+                              onClick={() => openViewer(photoUrl, "Evidencia")}
+                            >
                               Ver foto
-                            </a>
+                            </button>
                           )}
 
                           <label className="btn btnGhost" style={{ cursor: editable ? "pointer" : "not-allowed" }}>
