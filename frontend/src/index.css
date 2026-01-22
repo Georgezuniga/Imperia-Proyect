@@ -4233,3 +4233,61 @@ input, select, textarea, button { max-width: 100%; }
   border: 1px solid rgba(255,255,255,.08);
   background: rgba(0,0,0,.25);
 }
+
+
+/* Header del grupo (desktop por defecto) */
+.dayHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dayHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.dayTitle {
+  min-width: 0;
+}
+
+/* Contenedor de stats */
+.dayStats {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* Chips compactos */
+.chipStat {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ✅ MOBILE: stats debajo de la fecha */
+@media (max-width: 520px) {
+  .dayHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .dayStats {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;          /* por si en algún móvil queda justo */
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+
+  .chipStat {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}

@@ -159,11 +159,12 @@ export default function AdminRunsPage() {
                   <div className="dayTitle">{formatDayTitle(g.day)}</div>
                 </div>
 
-                <div className="dayMeta">
-                  <span className="chip">{counts.in_progress || 0} en progreso</span>
-                  <span className="chip">{counts.submitted || 0} enviados</span>
-                  <span className="chip">{counts.reviewed || 0} revisados</span>
-                </div>
+                <div className="dayMeta dayStats">
+  <span className="chip chipStat">{counts.in_progress || 0} en progreso</span>
+  <span className="chip chipStat">{counts.submitted || 0} enviados</span>
+  <span className="chip chipStat">{counts.reviewed || 0} revisados</span>
+</div>
+
               </button>
 
               {/* Contenido colapsable */}
